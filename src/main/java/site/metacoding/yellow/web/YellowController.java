@@ -10,5 +10,4 @@ public class YellowController {
 	public String yellow() {
 		return "index";
 	}
-
 }

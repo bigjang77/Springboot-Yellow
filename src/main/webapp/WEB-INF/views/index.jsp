@@ -4,10 +4,14 @@
 
 <h1>카카오맵</h1>
 
-<div id="map" style="width:800px;height:700px;"></div>
+<div id="map" style="width:800px;height:700px; margin: 10px;"></div>
 
-<input type="text" id="coordinates" style="width: 70%;" readonly>
-
+<div >
+    <button id="reload">다시그리기</button>
+</div>
+<div style="margin: 10px">
+    <input type="text" id="coordinates" style="width: 70%;" readonly>
+</div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f96461d35c6cee324cd2b59aa03c70fd"></script>
 <script>
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
@@ -17,22 +21,92 @@
         };
     
     var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+    
+     // 현재 위치 가져오기
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+            var newCenter = new kakao.maps.LatLng(lat, lon);
+            map.setCenter(newCenter);
+        }, function (error) {
+            console.error('Error getting current position:', error);
+        });
+    }
     
     var drawingFlag = false; // 다각형이 그려지고 있는 상태를 가지고 있을 변수입니다
     var drawingPolygon; // 그려지고 있는 다각형을 표시할 다각형 객체입니다
     var polygon; // 그리기가 종료됐을 때 지도에 표시할 다각형 객체입니다
     var areaOverlay; // 다각형의 면적정보를 표시할 커스텀오버레이 입니다
+    var clickCount = 0;
+    var reloadButton = document.getElementById('reload');
+
+    // "다시 그리기" 버튼을 클릭했을 때 초기화 함수 호출
+    reloadButton.addEventListener('click', function () {
+
+        // 현재 위치 가져오기
+        if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+            var newCenter = new kakao.maps.LatLng(lat, lon);
+            map.setCenter(newCenter);
+        }, function (error) {
+            console.error('Error getting current position:', error);
+        });
+    }
+
+
+        resetMap();
+        clickCount = 0;
+
+        // 입력 창을 초기화
+        var coordinatesInput = document.getElementById('coordinates');
+        coordinatesInput.value = ''; 
+
+    });
+
+    // 초기화 함수
+    function resetMap() {
+        drawingFlag = false;
+        clickCounter = 0;
+
+        if (drawingPolygon) {
+            drawingPolygon.setMap(null);
+            drawingPolygon = null;
+        }
+
+        if (polygon) {
+            polygon.setMap(null);
+            polygon = null;
+        }
+
+        if (areaOverlay) {
+            areaOverlay.setMap(null);
+            areaOverlay = null;
+        }
+
+        map.setLevel(3); // 확대 레벨 초기화
+        
+    }
     
-    // 마우스 클릭 이벤트가 발생하고나면 drawingFlag가 그려지고 있는 상태인 ture 값으로 바뀝니다
-    // 그려지고 있는 상태인 경우 drawingPolygon 으로 그려지고 있는 다각형을 지도에 표시합니다
-    // 마우스 오른쪽 클릭 이벤트가 발생하면 drawingFlag가 그리기가 종료된 상태인 false 값으로 바뀌고
-    // polygon 으로 다 그려진 다각형을 지도에 표시합니다
-    
+     
     
     // 지도에 마우스 클릭 이벤트를 등록합니다
     // 지도를 클릭하면 다각형 그리기가 시작됩니다 그려진 다각형이 있으면 지우고 다시 그립니다
     kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
-    
+        
+        clickCount++;
+
+    // 클릭 횟수가 10 이상이면 경고문을 표시하고 클릭을 못하게 합니다
+        if (clickCount >= 10) {
+            alert('더 이상 클릭할 수 없습니다.');
+            drawingFlag = false;
+            return;
+        }
+
+
         // 마우스로 클릭한 위치입니다 
         var clickPosition = mouseEvent.latLng; 
         
@@ -76,7 +150,7 @@
                 fillColor: '#00a0e9', // 채우기 색깔입니다
                 fillOpacity: 0.2 // 채우기 불투명도입니다
             });
-    
+            
             
         } else { // 다각형이 그려지고 있는 상태이면 
             
@@ -107,6 +181,7 @@
     // 지도에 마우스무브 이벤트를 등록합니다
     // 다각형을 그리고있는 상태에서 마우스무브 이벤트가 발생하면 그려질 다각형의 위치를 동적으로 보여주도록 합니다
     kakao.maps.event.addListener(map, 'mousemove', function (mouseEvent) {
+        
     
         // 지도 마우스무브 이벤트가 발생했는데 다각형을 그리고있는 상태이면
         if (drawingFlag){
@@ -140,6 +215,8 @@
             // 그려지고있는 다각형을  지도에서 제거합니다
             drawingPolygon.setMap(null);
             drawingPolygon = null;  
+
+           
             
             // 클릭된 죄표로 그릴 다각형의 좌표배열을 얻어옵니다
             var path = polygon.getPath();
@@ -186,6 +263,7 @@
         });
         var coordinatesInput = document.getElementById('coordinates');
         coordinatesInput.value = JSON.stringify(coordinatesArray);
+        
     });    
     </script>
 
