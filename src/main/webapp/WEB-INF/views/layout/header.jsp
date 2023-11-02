@@ -3,15 +3,44 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
+	<head>
+		<meta charset="utf-8">
+	<title>카카오맵</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            text-align: center;
+            width: 800px; /* h1 요소 너비 지정 */
+        }
+
+        #map {
+            width: 800px;
+            height: 700px;
+            margin: 10px;
+            border: 1px solid #ccc; /* 지도 테두리 스타일 지정 */
+        }
+
+        #controls {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* 왼쪽 정렬 지정 */
+            margin: 10px;
+			width: 500px;
+        }
+
+        #coordinates, input[type="text"] {
+            width: 70%;
+            margin: 10px;
+        }
+
+        #reload {
+            margin: 10px;
+        }
+    </style>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
-<style>
-	.info {position:relative;top:5px;left:5px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;font-size:12px;padding:5px;background:#fff;list-style:none;margin:0;} 
-	.info:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}    
-	.info .label {display:inline-block;width:50px;}
-	.number {font-weight:bold;color:#00a0e9;}  
-	</style>
-<title>Insert title here</title>
 </head>
 <body>

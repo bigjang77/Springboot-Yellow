@@ -1,23 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="layout/header.jsp" %>
+<body>
+    <h1>카카오맵</h1>
 
-<h1>카카오맵</h1>
+    <div id="map"></div>
 
-<div id="map" style="width:800px;height:700px; margin: 10px;"></div>
+    <div id="controls">
+        <button id="reload">다시그리기</button>
 
-<div >
-    <button id="reload">다시그리기</button>
-</div>
-<div style="margin: 10px">
-    <input type="text" id="coordinates" style="width: 70%;" readonly>
-</div>
+        <p>좌표</p>
+        <input type="text" id="coordinates" readonly>
+
+        <p>설명</p>
+        <input type="text">
+    </div>
+
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f96461d35c6cee324cd2b59aa03c70fd"></script>
 <script>
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
         mapOption = { 
             center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-            level: 3 // 지도의 확대 레벨
+            level: 5 // 지도의 확대 레벨
         };
     
     var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
@@ -87,7 +91,7 @@
             areaOverlay = null;
         }
 
-        map.setLevel(3); // 확대 레벨 초기화
+        map.setLevel(5); // 확대 레벨 초기화
         
     }
     
