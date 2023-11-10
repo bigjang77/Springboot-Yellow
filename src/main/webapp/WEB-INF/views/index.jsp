@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="layout/header.jsp" %>
-<body>
+
     <h1>카카오맵</h1>
 
     <div id="map"></div>
@@ -13,7 +13,9 @@
         <input type="text" id="coordinates" readonly>
 
         <p>설명</p>
-        <input type="text">
+        <input type="text" id="title">
+        
+        <button id="saveButton">저장</button>
     </div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f96461d35c6cee324cd2b59aa03c70fd"></script>
@@ -269,6 +271,33 @@
         coordinatesInput.value = JSON.stringify(coordinatesArray);
         
     });    
+    </script>
+    <script>
+
+        $("#saveButton").click(()=>{
+
+            let data = {
+                coordinates: $("#coordinates").val()
+            };
+
+            $.ajax("/addCoord",{
+			type:"POST",
+			dataType: "json",
+			data: JSON.stringify(data),
+			headers : {
+				"Content-Type" : "application/json"
+			}
+		}).done((res)=>{
+			if(res.code == 1){
+				alert("좌표가 저정되었습니다");
+			}
+		});
+
+        });
+
+        
+
+
     </script>
 
 

@@ -17,9 +17,9 @@ public class BoardController {
 	public String getBoard(Model model) {
 		//더미 데이터 만들기
 		List<Board> boardList = new ArrayList<>();
-		boardList.add(new Board(1,"스프링1강","컨트롤러"));
-		boardList.add(new Board(2,"스프링2강","템플릿 엔진 배우기"));
-		boardList.add(new Board(3,"스프링3강","DB 연결 하기"));
+		boardList.add(new Board(1,"좌표1","컨트롤러"));
+		boardList.add(new Board(2,"좌표2","템플릿 엔진 배우기"));
+		boardList.add(new Board(3,"좌표3","DB 연결 하기"));
 		
 		model.addAttribute("boards",boardList);
 		return "board/list";
