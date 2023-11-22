@@ -13,7 +13,7 @@
 	</c:when>
 	<c:otherwise>
 	<h2>NO</h2>
-	</c:otherwise>
+	</c:otherwise> 
 </c:choose>
 번호:${board.id}
 제목:${board.title}
