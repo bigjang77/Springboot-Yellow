@@ -47,3 +47,4 @@
 <body>
     <a href="/">메인</a>
     <a href="/board">게시판</a>
+    <a href="/blue">블루</a>

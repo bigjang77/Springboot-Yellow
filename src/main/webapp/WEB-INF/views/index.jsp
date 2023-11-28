@@ -264,8 +264,8 @@
 
         // path 배열에 있는 각 좌표의 위도와 경도를 coordinatesArray에 추가합니다
         path.forEach(function(coord) {
-            var latitude = coord.getLat().toFixed(2); // 위도
-            var longitude = coord.getLng().toFixed(2); // 경도
+            var latitude = coord.getLat().toFixed(4); // 위도
+            var longitude = coord.getLng().toFixed(4); // 경도
             coordinatesArray.push({ latitude, longitude });
         });
         var coordinatesInput = document.getElementById('coordinates');

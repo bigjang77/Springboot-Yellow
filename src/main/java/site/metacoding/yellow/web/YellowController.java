@@ -13,9 +13,20 @@ public class YellowController {
 		return "index";
 	}
 
+	@GetMapping("/blue")
+	public String blue() {
+		return "blue";
+	}
+
+
+
 	@PutMapping("/addCoord")
-	public String addCoord(Model model){
-		
+	public String addCoord(Model model) {
+
 		return null;
 	}
+	
+
+
+
 }

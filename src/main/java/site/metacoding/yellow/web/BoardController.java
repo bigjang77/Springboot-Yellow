@@ -16,20 +16,22 @@ import site.metacoding.yellow.domain.BoardRepository;
 @Controller
 public class BoardController {
 
+
 	@Autowired
 	private BoardRepository boardRepository;
 
 	@GetMapping("/board")//보드테이블의 데이터를 뷰에 담아줘
 	public String getBoard(Model model) {
 		//더미 데이터 만들기
-		
+
 		return "board/list";
 	}
 	
+
+	
 	@GetMapping("/board/{id}")
 	public String getBoardOne(@PathVariable Integer id, Model model) {
-		//더미 데이터 만들기
-		List<Board> boardList = new ArrayList<>();
+		
 
 		
 
