@@ -45,6 +45,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-    <a href="/">메인</a>
-    <a href="/board">게시판</a>
-    <a href="/blue">블루</a>
+    <ul>
+        <li><a href="/">메인</a></li>
+        <!-- <li><a href="/board">게시판</a></li> -->
+        <li><a href="/blue">블루</a></li>
+        <li><a href="/red">레드</a></li>
+    </ul>

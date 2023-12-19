@@ -281,7 +281,7 @@
                 coordinates: $("#coordinates").val()
             };
 
-            $.ajax("/addCoord",{
+            $.ajax("/save",{
 			type:"POST",
 			dataType: "json",
 			data: JSON.stringify(data),
@@ -291,52 +291,13 @@
 		}).done((res)=>{
 			if(res.code == 1){
 				alert("좌표가 저장되었습니다");
-			}
+			}else{
+                alert("오류발생")
+            }
 		});
 
         });
 
-// 'finish' 버튼을 클릭했을 때 종료 로직을 수행하는 이벤트 핸들러 추가
-document.getElementById('finishButton').addEventListener('click', function() {
-    // 현재 그리고 있는 다각형이 있는지 확인
-    if (drawingFlag) {
-        // 그려지고 있는 다각형을 지도에서 제거
-        drawingPolygon.setMap(null);
-        drawingPolygon = null;
-
-        // 클릭된 좌표로 그릴 다각형의 좌표 배열을 얻어옴
-        var path = polygon.getPath();
-
-        // 다각형을 구성하는 좌표의 개수가 3개 이상이면
-        if (path.length > 2) {
-            // 지도에 다각형을 표시
-            polygon.setMap(map);
-        } else {
-            // 다각형을 구성하는 좌표가 2개 이하이면 다각형을 지도에 표시하지 않음
-            polygon = null;
-        }
-
-        // 상태를 false로, 그리지 않고 있는 상태로 변경
-        drawingFlag = false;
-
-        // 위도와 경도를 저장할 배열
-        var coordinatesArray = [];
-
-        // 다각형의 좌표 배열을 얻음
-        var path = polygon.getPath();
-
-        // path 배열에 있는 각 좌표의 위도와 경도를 coordinatesArray에 추가
-        path.forEach(function(coord) {
-            var latitude = coord.getLat().toFixed(2); // 위도
-            var longitude = coord.getLng().toFixed(2); // 경도
-            coordinatesArray.push({ latitude, longitude });
-        });
-
-        // 좌표를 입력하는 input 엘리먼트에 JSON 형식의 좌표 배열을 출력
-        var coordinatesInput = document.getElementById('coordinates');
-        coordinatesInput.value = JSON.stringify(coordinatesArray);
-    }
-});
 
 
     </script>
